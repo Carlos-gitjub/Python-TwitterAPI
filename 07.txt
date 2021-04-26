@@ -1,0 +1,20 @@
+What Im building? 
+- A program that allowes you to search by word through your previous likes or retweets in Twitter. Using the Twitter API
+What do I need to build this? the parts..
+- I need to acces the Twiiter API
+  Basic understanding of the API --> See videos in Youtube CS Dojo or the other one
+What do I need to buil it? The skills..
+- Python basics
+  Twittr API basics
+How do I build this? the steps the plan
+- See if i Have acces to the API
+  Open Youtube two videos Twitter bot
+  Star tinkering and exploring to see how I could achieve it
+
+
+Different ways to achieve these? 
+Youtube tutorials 
+Experimenting and reading the API documentation
+Github
+
+   
