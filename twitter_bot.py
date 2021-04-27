@@ -15,18 +15,22 @@ ACCESS_SECRET = 'Cc7gLGRn4nxAvFFOPTmDbkZ1the1jAnHmHtG6ZX3KFeRS'
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 
+
+################################
+
 #acceder a la API
 api = tweepy.API(auth)
 
-#Ejemplo: tweeteamos algo
-#api.update_status('hola cocacola')
+#tweeteamos algo
+api.update_status('hola cocacola')
 
 #ultima mencion en twitter
 mentions = api.mentions_timeline(tweet_mode = 'extended') 
 print(mentions[0].text)
-print(mentions[0].__dict__.keys())    #obtén las claves del fichero json
+#claves del fichero json
+print(mentions[0].__dict__.keys())    
 
-#texto del último "me gusta"
+#último "me gusta"
 print(api.favorites()[0].text)
 
 
