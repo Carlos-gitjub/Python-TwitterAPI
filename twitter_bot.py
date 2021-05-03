@@ -1,5 +1,4 @@
 import tweepy
-import json
 
 print('this is my twitter bot')
 
@@ -22,41 +21,26 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 #acceder a la API
 api = tweepy.API(auth)
 
+#tweeteamos algo
+api.update_status('hola cocacola')
 
-tweet_list=[]
-class MyStreamListener(tweepy.StreamListener):
-    def __init__(self,api=None):
-        super(MyStreamListener,self).__init__()
-        self.num_tweets=0
-        self.file=open("tweet.txt","w")
-    def on_status(self,status):
-        tweet=status._json
-        self.file.write(json.dumps(tweet)+ '\n')
-        tweet_list.append(status)
-        self.num_tweets+=1
-        if self.num_tweets<1000:
-            return True
-        else:
-            return False
-        self.file.close()
+#ultima mencion en twitter
+mentions = api.mentions_timeline(tweet_mode = 'extended') 
+print(mentions[0].text)
+#claves del fichero json
+print(mentions[0].__dict__.keys())    
 
-        #create streaming object and authenticate
-l = MyStreamListener()
-stream =tweepy.Stream(auth,l)
-#this line filters twiiter streams to capture data by keywords
-stream.filter(track=['covid','corona','covid19','coronavirus',
-'facemask','sanitizer','social-distancing'])
+#último "me gusta"
+print(api.favorites()[0].text)
 
 
-tweets_data_path='copp.txt'              #file con la INFO
-tweets_data=[]                           #formato json
-tweets_file=open(tweets_data_path,"r")   #lector
-#read in tweets and store on list
-for line in tweets_file:
-    tweet=json.loads(line)
-    tweets_data.append(tweet)
-tweets_file.close()
-print(tweets_data[0])
+
+
+
+
+
+
+
 
 
 
