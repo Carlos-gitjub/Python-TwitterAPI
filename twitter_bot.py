@@ -1,4 +1,5 @@
 import tweepy
+import json
 
 print('this is my twitter bot')
 
@@ -15,8 +16,48 @@ ACCESS_SECRET = 'Cc7gLGRn4nxAvFFOPTmDbkZ1the1jAnHmHtG6ZX3KFeRS'
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 
-#Creamos la variable para acceder a la API
+
+################################
+
+#acceder a la API
 api = tweepy.API(auth)
 
-#Ejemplo: tweeteamos algo
-api.update_status('hola cocacola')
+
+tweet_list=[]
+class MyStreamListener(tweepy.StreamListener):
+    def __init__(self,api=None):
+        super(MyStreamListener,self).__init__()
+        self.num_tweets=0
+        self.file=open("tweet.txt","w")
+    def on_status(self,status):
+        tweet=status._json
+        self.file.write(json.dumps(tweet)+ '\n')
+        tweet_list.append(status)
+        self.num_tweets+=1
+        if self.num_tweets<1000:
+            return True
+        else:
+            return False
+        self.file.close()
+
+        #create streaming object and authenticate
+l = MyStreamListener()
+stream =tweepy.Stream(auth,l)
+#this line filters twiiter streams to capture data by keywords
+stream.filter(track=['covid','corona','covid19','coronavirus',
+'facemask','sanitizer','social-distancing'])
+
+
+tweets_data_path='copp.txt'              #file con la INFO
+tweets_data=[]                           #formato json
+tweets_file=open(tweets_data_path,"r")   #lector
+#read in tweets and store on list
+for line in tweets_file:
+    tweet=json.loads(line)
+    tweets_data.append(tweet)
+tweets_file.close()
+print(tweets_data[0])
+
+
+
+
